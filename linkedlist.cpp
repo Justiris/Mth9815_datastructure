@@ -27,14 +27,22 @@ LinkedList<T>::~LinkedList() {
 template <typename T>
 void LinkedList<T>::Add(T value) {
 	Node<T>* newNode =new Node<T>(value);
-
-	if (tail == nullptr) {
+	if (head == nullptr)
+	{
 		head = newNode;
-		tail = newNode;
-		return;
+		head->next = tail;
 	}
-	tail->next = newNode;
-	tail = tail->next;
+	else
+	{
+		Node<T>* temp = head;
+		while (temp->next != tail)
+		{
+			temp = temp->next;
+		}
+		temp->next = newNode;
+		newNode->next = tail;
+	}
+
 }
 
 //print the whole list
@@ -143,6 +151,20 @@ T LinkedList<T>::Remove(int index) {
 	}
 }
 
+//Return size of the list
+template<typename T>
+int LinkedList<T>::Size()const
+{
+	int count = 0;
+	Node<T>* temp = head;
+	while (temp != nullptr)
+	{
+		count++;
+		temp = temp->next;
+	}
+	return count;
+}
+
 // Return an iterator on this list
 template <typename T>
 ListIterator<T> LinkedList<T>::Iterator() {
@@ -163,8 +185,13 @@ bool ListIterator<T>::HasNext() {
 // Return the next element in this iterator
 template <typename T>
 T ListIterator<T>::Next() {
-	return p->next->data;
+	if(p->next != nullptr) return p->next->data;
 }
 
+// Return the current element in this iterator
+template <typename T>
+T ListIterator<T>::Current() {
+	if(p != nullptr) return p->data;
+}
 #endif // linkedLIST_CPP
 

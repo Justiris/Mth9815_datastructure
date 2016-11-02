@@ -7,65 +7,46 @@
 #include "HashTable.cpp"
 using namespace std;
 
-class MyHasher : Hasher<int> {
-public:
-	int HashFunction(int v) {
-		int _v = (v > 0 ? v : -v);
-		return _v % _Size;
-	}
-};
-
-class MyEqual : EqualityPredicate<int> {
-public:
-	bool isEqual(const int &a, const int &b) { return a == b; }
-};
-
-
 
 int main() {
-
 	LinkedList<int> a;
-	cout << "test Linkedlist" << endl;
-	a.Add(5);
-	a.Add(1);
+	a.Add(2);
 	a.Add(4);
-	a.Insert(3,1);
+	cout<<"my linkedlist contains: ";
 	a.Print();
-	cout <<a.IndexOf(1) << endl;
+	cout <<"size of linkedlist"<< a.Size() << endl;
+	auto iter = a.Iterator();
+	cout << "after removing the element 1, my linkedlist contains: "; 
 	a.Remove(1);
 	a.Print();
-	auto iter = a.Iterator();
-	std::cout << iter.HasNext() << std::endl;
-	std::cout << iter.Next() << std::endl;
+	cout << "if head of my linkedlist has next element, print 1 else print 0. result: ";
+	cout << iter.HasNext()<<"\n";
 
-	
-	DoublyLinkedList<int> b;
+	cout << endl << endl;
+
+	DoubleLinkedList<int> b;
 	cout << "test double linked list" << endl;
 	b.Add(5);
 	b.Add(3);
+	cout << "my doublelinkedlist contains: ";
+	b.Print();
 	b.Insert(12,1);
-	b.Add(8);
+	cout << "after inseting 12 into slot 1, my linkedlist contains: ";
 	b.Print();
-	b.Remove(1);
+	b.Remove(2);
+	cout << "after removing the element 1, my linkedlist contains: ";
 	b.Print();
 
-	/*
-	HashTable<int, int, MyHasher, MyEqual> mytable;
+	cout << endl << endl;
+
+	HashTable<int, int> mytable;
 	cout << "test Hashtable" << endl;
-	for (int i = 0; i < 1000; ++i) {
-		mytable.Put(i, i+10);
-	}
-	cout << "The value of key 2 is: " << mytable.Get(2) << endl;
-	cout << "Is key 0 in this HashTable? " << mytable.ContainsKey(0) << endl;
-	cout << "Is key -1 in this HashTable? " << mytable.ContainsKey(-1) << endl;
-	cout << "Now, the size of the HashTable is: " << mytable.Size() << endl;
-
-	cout << "key 999 has been removed from the HashTable." << endl;
-	cout << "Now, the size of the HashTable is: " << mytable.Size() << endl;
-
-	cout << "Tried to remove key -1 which did not exsit in the Hash Table."
-		<< endl;
-	cout << "Now, the size of the HashTable is: " << mytable.Size() << endl;
-	*/
+	mytable.Put(4, 10);
+	mytable.Put(12, 25);
+	mytable.Put(17, 3);
+	mytable.Put(20, 96);
+	cout << "if mytable contains key 12, print 1 else print 0. result: "<<mytable.ContainsKey(12) << '\n';
+	cout << "if mytable contains key 5, print 1 else print 0. result: "<<mytable.ContainsKey(5) << endl;
+	cout << "get the value of key 17:  "<<mytable.Get(17) << '\n';
 	return 0;
 }

@@ -4,24 +4,26 @@
 
 template <typename T>
 class DNode : public Node<T> {
-public:
-	DNode(T, DNode<T>* _prev = nullptr, DNode<T>* _next = nullptr);
+	template<typename T>
+	friend class DoubleLinkedList;
+private:
 	DNode<T> * prev;
 	DNode<T> * next;
-
+public:
+	DNode(T value, DNode<T>* _prev = nullptr, DNode<T>* _next = nullptr);
 };
 
 template<typename T>
-class DoublyLinkedListIterator;
+class DoubleLinkedListIterator;
 
 template <typename T>
-class DoublyLinkedList : public LinkedList<T> {
+class DoubleLinkedList : public LinkedList<T> {
 private:
 	DNode<T>* head;
 	DNode<T>* tail;
 public:
-	DoublyLinkedList();
-	~DoublyLinkedList();
+	DoubleLinkedList();
+	~DoubleLinkedList();
 
 	void Print();
 	void Add(T value);

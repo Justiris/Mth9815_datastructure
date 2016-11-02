@@ -6,9 +6,16 @@ using namespace std;
 
 template<typename T>
 class Node {
-public:
+	template<typename T>
+	friend class LinkedList;
+	template<typename T>
+	friend class ListIterator;
+	template<typename T>
+	friend class DoubleLinkedList;
+private:
 	T data;
 	Node<T>* next;
+public:
 	Node(T _data, Node<T>* next=nullptr);
 
 };
@@ -22,7 +29,7 @@ public:
 	ListIterator(Node<T>* head);
 	bool HasNext();
 	T Next();
-	Node<T> operator *(const ListIterator &iter) { return *p; }
+	T Current();
 };
 
 
