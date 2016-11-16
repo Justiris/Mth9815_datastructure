@@ -2,8 +2,7 @@
 #include "doublelinked.h"
 #include <iostream>
 
-template<typename T>
-DNode<T>::DNode(T value, DNode<T>* _prev = nullptr, DNode<T>* _next = nullptr) :Node<T>(value), prev(_prev), next(_next) {}
+
 
 // the constructor for initialize empty list
 template<typename T>
@@ -18,9 +17,9 @@ DoubleLinkedList<T>::~DoubleLinkedList() {}
 
 // Add the specified element at the end of the list
 template <typename T>
-void DoubleLinkedList<T>::Add(T value) {
+void DoubleLinkedList<T>::Add(T value) {		//create a node contains the value
 	DNode<T>* newNode = new DNode<T>(value);
-	if (tail == NULL) {
+	if (tail == NULL) {				//if linkedlist is empty, create a head node with provided value
 		//it means the list empty rightnow
 		head = newNode;
 		tail = newNode;
@@ -32,7 +31,7 @@ void DoubleLinkedList<T>::Add(T value) {
 
 
 template <typename T>
-void DoubleLinkedList<T>::Print()
+void DoubleLinkedList<T>::Print()	 // traverse the linkedlist and print every element's data
 {
 	DNode<T>* temp = head;
 	while (temp) {
@@ -46,8 +45,8 @@ void DoubleLinkedList<T>::Print()
 
 // Add the specified element at the specified index
 template <typename T>
-void DoubleLinkedList<T>::Insert(T value, int index) {
-	DNode<T>* newNode = new DNode<T>(value);
+void DoubleLinkedList<T>::Insert(T value, int index) {			//first find the element with index = provided index-1
+	DNode<T>* newNode = new DNode<T>(value);			//create a node to contain the data
 	DNode<T>* temp = head;
 	DNode<T>* temp_next;
 	if (index == 0) {
@@ -56,7 +55,7 @@ void DoubleLinkedList<T>::Insert(T value, int index) {
 		head = newNode;
 		return;
 	}
-	int count = 0;
+	int count = 0;							//put the newnode inside them
 	while (temp) {
 		if (index == count + 1) {
 			temp_next = temp->next;
@@ -76,7 +75,7 @@ void DoubleLinkedList<T>::Insert(T value, int index) {
 
 // Get the element at the specified index
 template <typename T>
-T DoubleLinkedList<T>::Get(int index) {
+T DoubleLinkedList<T>::Get(int index) {					//treverse the linkedlist to find the element with provide index
 	DNode<T>* temp = head;
 	int count = 0;
 	while (temp) {
@@ -91,7 +90,7 @@ T DoubleLinkedList<T>::Get(int index) {
 
 // Retrieve the index of the specified element (-1 if it does not exist in the list
 template <typename T>
-int DoubleLinkedList<T>::IndexOf(T value) {
+int DoubleLinkedList<T>::IndexOf(T value) {								//treverse the linkedlist to check if contains the element	
 	DNode<T>* temp = head;
 	int ind = 0;
 	while (temp) {
@@ -107,9 +106,9 @@ int DoubleLinkedList<T>::IndexOf(T value) {
 
 // Remove the element at the specified index and return it
 template <typename T>
-T DoubleLinkedList<T>::Remove(int index) {
+T DoubleLinkedList<T>::Remove(int index) {				//if index == 0, means want to remove current head
 	DNode<T>* temp = head;
-	if (index == 0) {
+	if (index == 0) {							//then first get head->next, then delete the head and put a new head
 		int value = head->data;
 		if (head == tail) {
 			delete temp;
