@@ -3,40 +3,18 @@
 #include "linkedlist.h"
 #include <iostream>
 
+template<typename T>
+Node<T>::Node(T _data, Node<T>* next = nullptr) :data(_data), next(next) {}
 
-
-template <typename T1>
-ListIterator<T1>::ListIterator(Node<T1>* head) : p(head) {} //create an iterator point to the head of linkedlist
-
-
-//check if the next element is null
-template <typename T1>
-bool ListIterator<T1>::HasNext() {		
-	if (!p) return 0;		//if p is NULL then definitely no next element
-	return (p->next != NULL);		//otherwise check if next node is null
-}
-
-//return the data of next node
-template <typename T1>
-T1 ListIterator<T1>::Next() {		
-	if (p->next != NULL) return p->next->data;		//if next node isn't null, then return its data
-}
-
-//return the data of current node
-template <typename T1>
-T1 ListIterator<T1>::Current() {
-	if (p != NULL) return p->data;		//if current node isn't null, then return its data
-}
-#endif // linkedLIST_CPP
 
 // the constructor for initialize empty list
-template<typename T2>
-LinkedList<T2>::LinkedList() : head(NULL), tail(NULL) {}
+template<typename T>
+LinkedList<T>::LinkedList() : head(nullptr), tail(nullptr) {}
 
 // the destructor for initialize empty list
-template<typename T2>
-LinkedList<T2>::~LinkedList() {
-	Node<T2>* temp = head;		//delete every pointer in turns
+template<typename T>
+LinkedList<T>::~LinkedList() {
+	Node<T>* temp = head;
 	while (head) {
 		head = head->next;
 		delete temp;
@@ -46,17 +24,17 @@ LinkedList<T2>::~LinkedList() {
 
 
 // Add the specified element at the end of the list
-template <typename T2>
-void LinkedList<T2>::Add(T2 value) {
-	Node<T2>* newNode =new Node<T2>(value);		//create a node contains the value
-	if (head == NULL)		//if linkedlist is empty, create a head node with provided value
+template <typename T>
+void LinkedList<T>::Add(T value) {
+	Node<T>* newNode =new Node<T>(value);
+	if (head == nullptr)
 	{
 		head = newNode;
 		head->next = tail;
 	}
-	else      
-	{											//otherwise find the node before tail, and put newnode inside it
-		Node<T2>* temp = head;
+	else
+	{
+		Node<T>* temp = head;
 		while (temp->next != tail)
 		{
 			temp = temp->next;
@@ -68,9 +46,9 @@ void LinkedList<T2>::Add(T2 value) {
 }
 
 //print the whole list
-template <typename T2>
-void LinkedList<T2>::Print() {			//traverse the linkedlist and print every element's data
-	Node<T2>* temp = head;
+template <typename T>
+void LinkedList<T>::Print() {
+	Node<T>* temp = head;
 	while (temp) {
 		std::cout << temp->data << " ";
 		temp = temp->next;
@@ -80,18 +58,18 @@ void LinkedList<T2>::Print() {			//traverse the linkedlist and print every eleme
 }
 
 // Add the specified element at the specified index
-template <typename T2>
-void LinkedList<T2>::Insert(T2 value, int index) {			//first find the element with index = provided index-1
+template <typename T>
+void LinkedList<T>::Insert(T value, int index) {
 
-	Node<T2>* newNode = new Node<T2>(value);				//create a node to contain the data
-	Node<T2>* temp = head;
-	Node<T2>* temp_next;
+	Node<T>* newNode = new Node<T>(value);
+	Node<T>* temp = head;
+	Node<T>* temp_next;
 	if (index == 0) {
 		newNode->next = head;
 		head = newNode;
 		return;
 	}
-	int count = 0;											//put the newnode inside them
+	int count = 0;
 	while (temp) {
 		if (index == count + 1) {
 			temp_next = temp->next;
@@ -108,9 +86,9 @@ void LinkedList<T2>::Insert(T2 value, int index) {			//first find the element wi
 
 
 // Get the element at the specified index
-template <typename T2>
-T2 LinkedList<T2>::Get(int index) {								//treverse the linkedlist to find the element with provide index
-	Node<T2>* temp = head;
+template <typename T>
+T LinkedList<T>::Get(int index) {
+	Node<T>* temp = head;
 	int count = 0;
 	while (temp) {
 		if (index == count)
@@ -122,10 +100,10 @@ T2 LinkedList<T2>::Get(int index) {								//treverse the linkedlist to find the
 
 
 // Retrieve the index of the specified element (-1 if it does not exist in the list
-template <typename T2>
-int LinkedList<T2>::IndexOf(T2 value) {					//treverse the linkedlist to check if contains the element
-														//return the index of first found element		
-	Node<T2>* temp = head;		
+template <typename T>
+int LinkedList<T>::IndexOf(T value) {
+
+	Node<T>* temp = head;
 	int ind = 0;
 	while (temp) {
 		if (temp->data == value)
@@ -134,18 +112,18 @@ int LinkedList<T2>::IndexOf(T2 value) {					//treverse the linkedlist to check i
 		ind++;
 
 	}
-	return -1;										//if linkedlist doesn;t contains this value, return -1
+	return -1;
 
 }
 
 
 
 // Remove the element at the specified index and return it
-template <typename T2>
-T2 LinkedList<T2>::Remove(int index) {
+template <typename T>
+T LinkedList<T>::Remove(int index) {
 
-	Node<T2>* temp = head;												//if index == 0, means want to remove current head
-	if (index == 0) {													//then first get head->next, then delete the head and put a new head
+	Node<T>* temp = head;
+	if (index == 0) {
 		int val = head->data;
 		if (head == tail) {
 			delete temp;
@@ -157,7 +135,7 @@ T2 LinkedList<T2>::Remove(int index) {
 		return val;
 	}
 	int count = 1;
-	Node<T2>* prev = head;
+	Node<T>* prev = head;
 	temp = temp->next;
 	while (temp) {
 		if (index == count) {
@@ -174,12 +152,12 @@ T2 LinkedList<T2>::Remove(int index) {
 }
 
 //Return size of the list
-template<typename T2>
-int LinkedList<T2>::Size()const							//treverse the linkedlist and count the number of element
+template<typename T>
+int LinkedList<T>::Size()const
 {
 	int count = 0;
-	Node<T2>* temp = head;
-	while (temp != NULL)
+	Node<T>* temp = head;
+	while (temp != nullptr)
 	{
 		count++;
 		temp = temp->next;
@@ -188,10 +166,32 @@ int LinkedList<T2>::Size()const							//treverse the linkedlist and count the nu
 }
 
 // Return an iterator on this list
-template <typename T2>
-ListIterator<T2> LinkedList<T2>::Iterator() {			
-	return ListIterator<T2>(head);
+template <typename T>
+ListIterator<T> LinkedList<T>::Iterator() {
+	return ListIterator<T>(head);
 }
 
+template <typename T>
+ListIterator<T>::ListIterator(Node<T>* head) : p(head) {}
 
+
+// Return whether there is another element to return in this iterator
+template <typename T>
+bool ListIterator<T>::HasNext() {
+	if (!p) return 0;
+	return (p->next != nullptr);
+}
+
+// Return the next element in this iterator
+template <typename T>
+T ListIterator<T>::Next() {
+	if(p->next != nullptr) return p->next->data;
+}
+
+// Return the current element in this iterator
+template <typename T>
+T ListIterator<T>::Current() {
+	if(p != nullptr) return p->data;
+}
+#endif // linkedLIST_CPP
 

@@ -5,50 +5,51 @@
 using namespace std;
 
 template<typename T>
-class Node { //Node represent the data set of every element in linkedlist
-	template<typename T2>
+class Node {
+	template<typename T>
 	friend class LinkedList;
-	template<typename T1>
+	template<typename T>
 	friend class ListIterator;
-	template<typename T3>
+	template<typename T>
 	friend class DoubleLinkedList;
 private:
-	T data;		//data stores the value of element in linkedlist
-	Node<T>* next;		//*next is a pointer to the next element of linkedlist
+	T data;
+	Node<T>* next;
 public:
-	Node(T _data, Node<T>* _next=NULL) :data(_data), next(_next) {}		//construct a new Node with given data
+	Node(T _data, Node<T>* next=nullptr);
+
 };
 
 
-template <typename T1>
-class ListIterator {		//ListIterator is the iterator of linkedlist
+template <typename T>
+class ListIterator {
 private:
-	Node<T1>* p;		//*p is a pointer point to an element of linkedlist
+	Node<T>* p;
 public:
-	ListIterator(Node<T1>* head);		//create an iterator point to the head of linkedlist
-	bool HasNext();		//check if the next element is null
-	T1 Next();		//return the data of next node
-	T1 Current();		//return the data of current node
+	ListIterator(Node<T>* head);
+	bool HasNext();
+	T Next();
+	T Current();
 };
 
 
-template<typename T2>
-class LinkedList {		//linkedlist represent the "linkedlist" data structure
+template<typename T>
+class LinkedList {
 private:
-	Node<T2>* head;		//a node pointer point to the head of linkedlist
-	Node<T2>* tail;		//a node pointer point to the tail of linked list
+	Node<T>* head;
+	Node<T>* tail;
 public:
-	LinkedList();		//default constructor
-	~LinkedList();		//default destructor
+	LinkedList();
+	~LinkedList();
 
-	void Print();		//Print the element inside linkedlist
-	void Add(T2 value);		//add element into the tail of linkedlist
-	void Insert(T2 value, int index);		//insert element into a specific place of linkedlist
-	T2 Get(int index);		//get the data of a specific index
-	int IndexOf(T2 value);		//find the data and return its index
-	T2 Remove(int index);		//remove node in a specific index
-	int Size() const;		//return the length of linkedlist
-	ListIterator<T2> Iterator();		//construct a iterator of linkedlist
+	void Print();
+	void Add(T value);
+	void Insert(T value, int index);
+	T Get(int index);
+	int IndexOf(T value);
+	T Remove(int index);
+	int Size() const;
+	ListIterator<T> Iterator();
 };
 
 

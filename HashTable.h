@@ -5,18 +5,18 @@
 #include <vector>
 #include "linkedlist.h"
 
-template <typename K1, typename V1>				//represent the node in hashtable
+template <typename K, typename V>
 class HashNode {// key-value pair
 	template<typename K,typename V>
 	friend class HashTable;
 private:
-	K1 key;			//store the key
-	V1 value;		//store the value
+	K key;
+	V value;
 public:
-	HashNode(const K1 &key, const V1 &value) :key(key), value(value) {}		//constructor
-	K1 getKey() const { return key; }			//get the key of hashnode
-	V1 getValue() const { return value; }		//get the value of this node
-	void setValue(V1 value)				//change the value of this node
+	HashNode(const K &key, const V &value) :key(key), value(value) {}
+	K getKey() const { return key; }
+	V getValue() const { return value; }
+	void setValue(V value)
 	{
 		HashNode::value = value;
 	}
@@ -24,50 +24,50 @@ public:
 
 
 template <typename K>
-class Hasher {				//represent the hash function
+class Hasher {
 public:
-	virtual int operator () (K key, int size) = 0;		//virtual operator to perform the hash function
+	virtual int operator () (K key, int size) = 0;
 };
 
 template <typename K>
-class EqualityPredicate{			//represent the function dealing with collision
+class EqualityPredicate{
 public:
-	virtual bool operator()(K key1, K key2) = 0;			//virtual operator to perform the check collision function
+	virtual bool operator()(K key1, K key2) = 0;
 };
 
 template <typename K>
-class Hash_mod :public Hasher<K> {			//derived mod hash function
+class Hash_mod :public Hasher<K> {
 public:
-	virtual int operator () (K key, int size) override {			//return mod of the size
+	virtual int operator () (K key, int size) override {
 		return key%size;}
 };
 
 template <typename K>
-class isEqual :public EqualityPredicate<K> {		//derived equality function
+class isEqual :public EqualityPredicate<K> {
 public:
-	virtual bool operator ()(K key1, K key2) {			//return if two keys are equal
+	virtual bool operator ()(K key1, K key2) {
 		return key1 == key2;}
 };
 
-const int _Size = 1000;			//default hash table size
+const int _Size = 1000;
 
 template <typename K, typename V>
-class HashTable {				//represent the hashtable
+class HashTable {
 private:
-	vector<LinkedList<HashNode<K, V> > > table;			//use a linkedlist of hashnode as every storage blcok
-	int size;					//present current maximum size
+	vector<LinkedList<HashNode<K, V>>> table;
+	int size;
 
 public:
-	HashTable() {			//consturctor
+	HashTable() {
 		size = _Size;
-		table.resize(1000);		//create a new table
+		table.resize(1000);
 	};
-	~HashTable(){};			//default destructor
-	void Put(K key, V value);		//put a pair into the hashtable
-	V Get(K key);			//get the value using key
-	bool ContainsKey(K key);		//return if contains this key
-	int Size();			//return current maximum size
-	void Print(int id);			//print all pairs stored in the block with provided index 
+	~HashTable(){};
+	void Put(K key, V value);
+	V Get(K key);
+	bool ContainsKey(K key);
+	int Size();
+	void Print(int id);
 };
 
 
