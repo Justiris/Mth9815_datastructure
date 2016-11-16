@@ -15,8 +15,8 @@ I've created a test file, all the interfaces are used.
 
 Compile instructions
 
-The flag -std=c++11 or -std=c++0x must be used during compilation.
+The flag -std=c++11 must be used during compilation.
 
-$ g++ test.cpp -o test -std=c++11
+$ g++ main.cpp -o main.exe -std=c++11
 
-$ ./test
+$ main.exe
